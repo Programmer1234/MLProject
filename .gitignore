@@ -1,0 +1,8 @@
+### Matlab ###
+
+# Auto save files
+*.asv
+
+### Data files ###
+*.txt
+*.mat
