@@ -10,13 +10,15 @@ model = struct;
 % Initialize weight vector
 weights_vec = ones(1, nExamples);
 
+permutations_mat = TODO;
+
 for t = 1 : nClassifiers
     
     % Normalize the weights vector
     weights_vec = weights_vec / sum(weights_vec);
     
     % Select the best weak classifier.
-    [cl_i, cl_theta, cl_p, cl_err, cl_predicted_labels] = selectwc(examples, labels, weights_vec);
+    [cl_i, cl_permutation, cl_err, cl_predicted_labels] = selectwc(examples, labels, weights_vec, permutations_mat);
     
     cl_alpha = 0.5 * log((1 - cl_err) / cl_err); 
     
@@ -31,8 +33,7 @@ for t = 1 : nClassifiers
     
     % Save the classifier [i, theta, pol], and the corresponding alpha factor into the returned model.
     model(t).i = cl_i; 
-    model(t).theta = cl_theta; 
-    model(t).pol = cl_p; 
+    model(t).permutation = cl_theta; 
     model(t).alpha = cl_alpha;
     
     % If alpha is 0 or Inf we must break
