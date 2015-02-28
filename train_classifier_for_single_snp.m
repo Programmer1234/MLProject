@@ -6,6 +6,8 @@ switch cls_method
         classifier = train_svm_one_vs_one(double(train_samples), double(train_labels));
     case 'random'
         classifier = train_random_classifier(train_samples, train_labels);
+	case 'adaboost'
+		classifier = train_adaboost_classifier(train_samples, train_labels);
     otherwise
         error('Unknown classifying method');
 end

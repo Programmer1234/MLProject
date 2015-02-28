@@ -2,7 +2,7 @@ function [ model ] = adaboost( examples, labels, nClassifiers )
 %ADABOOST Summary of this function goes here
 %   Detailed explanation goes here
 
-nExamples = size(examples, 2);
+nExamples = size(examples, 1);
 
 % Initialize the model
 model = struct;
@@ -10,7 +10,8 @@ model = struct;
 % Initialize weight vector
 weights_vec = ones(1, nExamples);
 
-permutations_mat = TODO;
+permutations_mat = unique(nchoosek(repmat([0,1,2], 1,3), 3), 'rows');
+%permutations_mat = perms([0,1,2]);
 
 for t = 1 : nClassifiers
     
@@ -19,21 +20,19 @@ for t = 1 : nClassifiers
     
     % Select the best weak classifier.
     [cl_i, cl_permutation, cl_err, cl_predicted_labels] = selectwc(examples, labels, weights_vec, permutations_mat);
-    
-    cl_alpha = 0.5 * log((1 - cl_err) / cl_err); 
+    %fprintf('chosen error:%d, feature:%d permutation:%d %d %d\n', cl_err, cl_i, cl_permutation(1), cl_permutation(2), cl_permutation(3));
+    cl_alpha = (log((1 - cl_err) / cl_err) + log(2)); 
     
     % Update weights vector
     for i = 1 : nExamples
-        if cl_predicted_labels(i) == labels(i)
-            weights_vec(i) = weights_vec(i) * exp(cl_alpha); % p_y(j) = y(j)
-        else
-            weights_vec(i) = weights_vec(i) * exp(-1 * cl_alpha); % p_y(j) != y(j)
+        if cl_predicted_labels(i) ~= labels(i)
+            weights_vec(i) = weights_vec(i) * exp(cl_alpha); % p_y(j) != y(j)
         end
     end
     
-    % Save the classifier [i, theta, pol], and the corresponding alpha factor into the returned model.
+    % Save the classifier [i, permutation] and the corresponding alpha factor into the returned model.
     model(t).i = cl_i; 
-    model(t).permutation = cl_theta; 
+    model(t).permutation = cl_permutation; 
     model(t).alpha = cl_alpha;
     
     % If alpha is 0 or Inf we must break

@@ -26,7 +26,7 @@ for predicted_lable in predicted_labels:
 %}
 
 % Initialization
-[nFeatures, nExamples] = size(examples_mat);
+[nExamples, nFeatures] = size(examples_mat);
 
 cl_error = sum(weights_vec);
 cl_permutation = -Inf;
@@ -38,23 +38,20 @@ cl_labels_vec = 0;
 for f_index = 1 : nFeatures 
 
     % Select only the relevant feature from the data.
-    feature_vec = examples_mat(f_index, :);
+    feature_vec = examples_mat(:,f_index);
     
-    % For each polarity (polarity is in {-1, 1})
-        for permutation_index = 1: size(permutaions_mat) %TODO
-			curr_permutation = permutaions_mat(permutation_index, :); %TODO
+    % For each permutation
+        for permutation_index = 1: size(permutations_mat) 
+			curr_permutation = permutations_mat(permutation_index, :);
             
-			% Calculate the labels the classifier [i, theta, polarity]
+			% Calculate the labels the classifier 
 			% predicts.
 			predicted_lables_vec = zeros(1 , nExamples);
 
-			% TODO: change to matrix calculation
-			for e_index = 1 : nExamples
-				predicted_lables_vec(e_index) = curr_permutation(feature_vec(e_index) + 1); % (+1) is because matlab is 1 based
-			end
+			predicted_lables_vec = curr_permutation(feature_vec(:) + 1); % (+1) is because matlab is 1 based
 			
 			% Calculate the classifier's error
-			curr_cl_error = calc_error(labels_vec, predicted_lables_vec, weights_vec);
+			curr_cl_error = calc_error(labels_vec', predicted_lables_vec, weights_vec);
 			
 			% TODO: choose random best classifier
 			% Check if the current classifier is the best we encountered so far.
@@ -66,6 +63,5 @@ for f_index = 1 : nFeatures
 				cl_labels_vec = predicted_lables_vec;
 		end % Iterating permutations
 end % Iterating features
-
 end % function
 

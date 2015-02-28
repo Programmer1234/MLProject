@@ -4,6 +4,7 @@ function [predicted_labels_mat, success_rate_vec, used_classifiers_vec, avg_succ
 % Adding folders to search path
 addpath Classifiers;
 addpath Classifiers\svm;
+addpath Classifiers\random;
 addpath Classifiers\Adaboost;
 
 % load data - extracted_test, extraced_train, missing
