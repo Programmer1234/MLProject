@@ -1,9 +1,12 @@
 function [ predicted_labels ] = predict_labels_for_single_snp(test_data, classifier, cls_method)
 
-if strcmp(cls_method, 'svm-one-vs-one')
-    predicted_labels = predict_svm_one_vs_one(double(test_data), classifier);
-else
-    error('Unknown classifying method');
+switch cls_method
+    case 'svm-one-vs-one'
+        predicted_labels = predict_svm_one_vs_one(double(test_data), classifier);
+    case 'random'
+        predicted_labels = predict_random_classifier(double(test_data), classifier);
+    otherwise
+        error('Unknown classifying method');
 end
 
 end

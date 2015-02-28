@@ -7,7 +7,7 @@ addpath Classifiers\svm;
 addpath Classifiers\Adaboost;
 
 % Classifiers selected.
-CLASSIFIERS = cellstr(['svm-one-vs-one']);
+CLASSIFIERS = {'svm-one-vs-one'; 'random'};
 
 % load data - extracted_test, extraced_train, missing
 load Data\dataforproject.mat;
@@ -32,4 +32,3 @@ end
 fprintf('Best success rate is: %.2f\n', 100*best_success_rate);
 
 end
-
