@@ -3,9 +3,10 @@ function [best_classifier_predicted_labels, best_success_rate] = main()
 
 % Adding folders to search path
 addpath Classifiers;
+addpath Classifiers\svm;
+addpath Classifiers\Adaboost;
 
 % Classifiers selected.
-%CLASSIFIERS = cellstr(['svm-one-vs-all', 'svm-one-vs-one']);
 CLASSIFIERS = cellstr(['svm-one-vs-one']);
 
 % load data - extracted_test, extraced_train, missing
@@ -19,7 +20,7 @@ best_classifier_predicted_labels = 0;
 
 % Run classifiers
 for i = 1 : length(CLASSIFIERS)
-    [test_predicted_labels_mat, success_rate] = run_classifier(train_data, train_labels, test_data, CLASSIFIERS(i));
+    [test_predicted_labels_mat, success_rate] = run_classifier(train_data, train_labels, test_data, CLASSIFIERS{i});
     fprintf('Classifier %s success rate is: %.2f\n', CLASSIFIERS{i}, 100* success_rate);
     
     if success_rate > best_success_rate
