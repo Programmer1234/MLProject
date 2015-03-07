@@ -10,8 +10,8 @@ model = struct;
 % Initialize weight vector
 weights_vec = ones(1, nExamples);
 
+% Create a matrix of all possible combinations of 0,1,2 of size 3. - (000,001,002,010...)
 permutations_mat = unique(nchoosek(repmat([0,1,2], 1,3), 3), 'rows');
-%permutations_mat = perms([0,1,2]);
 
 for t = 1 : nClassifiers
     
@@ -20,17 +20,17 @@ for t = 1 : nClassifiers
     
     % Select the best weak classifier.
     [cl_i, cl_permutation, cl_err, cl_predicted_labels] = selectwc(examples, labels, weights_vec, permutations_mat);
-    %fprintf('chosen error:%d, feature:%d permutation:%d %d %d\n', cl_err, cl_i, cl_permutation(1), cl_permutation(2), cl_permutation(3));
+	% the log(K-1) addition is for multicast adaboost with K classes(SAMME algorithm)
     cl_alpha = (log((1 - cl_err) / cl_err) + log(2)); 
     
     % Update weights vector
     for i = 1 : nExamples
         if cl_predicted_labels(i) ~= labels(i)
-            weights_vec(i) = weights_vec(i) * exp(cl_alpha); % p_y(j) != y(j)
+            weights_vec(i) = weights_vec(i) * exp(cl_alpha); 
         end
     end
     
-    % Save the classifier [i, permutation] and the corresponding alpha factor into the returned model.
+    % Save the classifier [SNP_index, permutation] and the corresponding alpha factor into the returned model.
     model(t).i = cl_i; 
     model(t).permutation = cl_permutation; 
     model(t).alpha = cl_alpha;

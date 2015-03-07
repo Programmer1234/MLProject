@@ -1,6 +1,6 @@
 function [ cl_i , cl_permutation, cl_error, cl_labels_vec ] = selectwc( examples_mat, labels_vec, weights_vec, permutations_mat )
 %{
-Selects the best weak classifier of the form [i, theta, p], for the given 
+Selects the best weak classifier of the form [SNP number, permutation], for the given 
 examples set. The classifier error, and predicted labels are returned as
 well.
 
@@ -46,14 +46,13 @@ for f_index = 1 : nFeatures
             
 			% Calculate the labels the classifier 
 			% predicts.
-			predicted_lables_vec = zeros(1 , nExamples);
-
 			predicted_lables_vec = curr_permutation(feature_vec(:) + 1); % (+1) is because matlab is 1 based
 			
 			% Calculate the classifier's error
-			curr_cl_error = calc_error(labels_vec', predicted_lables_vec, weights_vec);
+			error_vec = (labels_vec' ~= predicted_lables_vec);
+            weighted_vec = error_vec .* weights_vec;
+            curr_cl_error = sum(weighted_vec);
 			
-			% TODO: choose random best classifier
 			% Check if the current classifier is the best we encountered so far.
 			if cl_error > curr_cl_error
 				% Update our returned classifier.
