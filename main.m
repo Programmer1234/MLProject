@@ -5,6 +5,7 @@ function [predicted_labels_mat, success_rate_vec, used_classifiers_vec, avg_succ
 addpath libsvm;
 addpath Classifiers;
 addpath Classifiers\svm;
+addpath Classifiers\KNN;
 addpath Classifiers\random;
 addpath Classifiers\Adaboost;
 
@@ -45,5 +46,9 @@ used_classifiers_vec = used_classifiers_vec';
 avg_success_rate = mean(success_rate_vec);
 
 fprintf('Average success rate (across different SNPs) is %.2f\n', 100 * avg_success_rate);
+
+% Saving data as requested
+ytest = predicted_labels_mat;
+save ytest.mat ytest;
 
 end

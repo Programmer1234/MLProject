@@ -8,7 +8,8 @@ best_classifier = 0;
 best_cls_method = 0;
 
 % Possible classifiers.
-CLASSIFIERS = {'svm-one-vs-one'; 'adaboost'};
+%CLASSIFIERS = {'svm-one-vs-one'; 'adaboost'; 'KNN'};
+CLASSIFIERS = {'KNN'};
 
 % Run classifiers
 for i = 1 : length(CLASSIFIERS)

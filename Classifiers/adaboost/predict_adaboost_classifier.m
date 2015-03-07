@@ -1,5 +1,5 @@
 function [ predicted_labels ] = predict_adaboost_classifier(test_data, classifier)
-%PREDICT_RANDOM_CLASSIFIER
+% predicts the missing SNP according to the given classifier 
 
 % use the main 60 SNPs of each sample for the prediction
 test_data = test_data(:,70:130);

@@ -8,6 +8,8 @@ switch cls_method
         classifier = train_random_classifier(train_samples, train_labels);
 	case 'adaboost'
 		classifier = train_adaboost_classifier(train_samples, train_labels);
+	case 'KNN'
+		classifier = train_knn_classifier(train_samples, train_labels);
     otherwise
         error('Unknown classifying method');
 end
