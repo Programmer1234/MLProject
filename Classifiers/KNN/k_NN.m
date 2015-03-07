@@ -15,9 +15,9 @@ function [ k_nearest_neigbours_indices_matrix ] = k_NN( train_set, test_set, k)
 % D[:, j] = Is a column of all the distances of the training set from the
 % j'th vector in the test_set.
 
-SNP_dist_func = @(XI,XJ)( sum( repmat(XI, size(XJ,1), 1) ~= XJ, 2) );
+%SNP_dist_func = @(XI,XJ)( sum( repmat(XI, size(XJ,1), 1) ~= XJ, 2) );
 
-D = pdist2(train_set, test_set , SNP_dist_func);
+D = pdist2(train_set, test_set , 'hamming');
 [~ , permutation] = sort(D);
 
 k_nearest_neigbours_indices_matrix = permutation(1:k, :);

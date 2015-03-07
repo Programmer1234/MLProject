@@ -1,4 +1,4 @@
-function [model] = train_adabost_classifier(train_samples, train_labels)
+function [model] = train_adaboost_classifier(train_samples, train_labels)
 % trains the adaboost with the given data. model is the output classifier.
 CLASSIFIERS_NUMBER = 10;
 
