@@ -1,6 +1,5 @@
 function [ model ] = adaboost( examples, labels, nClassifiers )
-%ADABOOST Summary of this function goes here
-%   Detailed explanation goes here
+% implements the Adaboost algorithm for 3-class scenario. model is the output classifier.
 
 nExamples = size(examples, 1);
 
