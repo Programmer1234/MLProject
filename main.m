@@ -2,6 +2,7 @@ function [predicted_labels_mat, success_rate_vec, used_classifiers_vec, avg_succ
 % Project's entry point
 
 % Adding folders to search path
+addpath libsvm;
 addpath Classifiers;
 addpath Classifiers\svm;
 addpath Classifiers\random;
